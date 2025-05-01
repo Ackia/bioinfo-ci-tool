@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [1.17]
+        version: [1.21]
         arch: [amd64, arm64]
     steps:
       - uses: actions/checkout@v3
@@ -32,7 +32,7 @@ jobs:
           platforms: linux/${{ matrix.arch }}
           push: true
           tags: |
-            ghcr.io/your-org/samtools:${{ matrix.version }}
-            ghcr.io/your-org/samtools:latest
+            ghcr.io/ackia/samtools:${{ matrix.version }}
+            ghcr.io/ackia/samtools:latest
           build-args: |
             VERSION=${{ matrix.version }}

@@ -32,7 +32,7 @@ jobs:
           platforms: linux/${{ matrix.arch }}
           push: true
           tags: |
-            ghcr.io/your-org/minimap2:${{ matrix.version }}
-            ghcr.io/your-org/minimap2:latest
+            ghcr.io/ackia/minimap2:${{ matrix.version }}
+            ghcr.io/ackia/minimap2:latest
           build-args: |
             VERSION=${{ matrix.version }}

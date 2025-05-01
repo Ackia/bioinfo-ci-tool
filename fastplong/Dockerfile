@@ -1,16 +1,13 @@
-# Fastplong multi-stage build
-ARG VERSION=main
-FROM ubuntu:22.04-slim AS builder
-RUN apt-get update && apt-get install -y python3-pip git && rm -rf /var/lib/apt/lists/*
-RUN git clone --depth 1 --branch ${VERSION} https://github.com/your-org/fastplong.git /src/fastplong
-RUN pip3 wheel /src/fastplong -w /wheels
+# Fastplong prebuilt binary
+FROM debian:bookworm-slim AS builder
+RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
+RUN wget http://opengene.org/fastplong/fastplong -O /fastplong && chmod +x /fastplong
 
-FROM ubuntu:22.04-slim
+FROM debian:bookworm-slim
 ARG VERSION
-LABEL org.opencontainers.image.source="https://github.com/your-org/fastplong"
+LABEL org.opencontainers.image.source="https://github.com/OpenGene/fastplong"
 LABEL org.opencontainers.image.version="${VERSION}"
 LABEL org.opencontainers.image.license="MIT"
-RUN apt-get update && apt-get install -y python3-pip ca-certificates && rm -rf /var/lib/apt/lists/*
-COPY --from=builder /wheels/*.whl /wheels/
-RUN pip3 install /wheels/*.whl && rm -rf /wheels
+RUN apt-get update && apt-get install -y ca-certificates wget && rm -rf /var/lib/apt/lists/*
+COPY --from=builder /fastplong /usr/local/bin/fastplong
 ENTRYPOINT ["fastplong"]

@@ -32,7 +32,7 @@ jobs:
           platforms: linux/${{ matrix.arch }}
           push: true
           tags: |
-            ghcr.io/your-org/fastplong:${{ matrix.version }}
-            ghcr.io/your-org/fastplong:latest
+            ghcr.io/ackia/fastplong:${{ matrix.version }}
+            ghcr.io/ackia/fastplong:latest
           build-args: |
             VERSION=${{ matrix.version }}

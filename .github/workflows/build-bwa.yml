@@ -32,7 +32,7 @@ jobs:
           platforms: linux/${{ matrix.arch }}
           push: true
           tags: |
-            ghcr.io/your-org/bwa:${{ matrix.version }}
-            ghcr.io/your-org/bwa:latest
+            ghcr.io/ackia/bwa:${{ matrix.version }}
+            ghcr.io/ackia/bwa:latest
           build-args: |
             VERSION=${{ matrix.version }}
