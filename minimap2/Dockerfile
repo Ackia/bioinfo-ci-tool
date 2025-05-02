@@ -3,9 +3,12 @@ ARG VERSION=2.29
 FROM debian:bookworm-slim AS builder
 ARG VERSION
 RUN apt-get update && apt-get install -y wget git build-essential curl zlib1g-dev && rm -rf /var/lib/apt/lists/*
-RUN mkdir -p /src
-RUN curl -L https://github.com/lh3/minimap2/releases/download/v${VERSION}/minimap2-${VERSION}_x64-linux.tar.bz2 | tar jxf -
-RUN cp minimap2-${VERSION}_x64-linux/{minimap2,k8,paftools.js} /src/
+RUN mkdir -p /src && \
+    curl -L https://github.com/lh3/minimap2/releases/download/v${VERSION}/minimap2-${VERSION}_x64-linux.tar.bz2 | tar jxf - -C /src && \
+    mv /src/minimap2-${VERSION}_x64-linux/minimap2 /src && \
+    mv /src/minimap2-${VERSION}_x64-linux/k8 /src && \
+    mv /src/minimap2-${VERSION}_x64-linux/paftools.js /src && \
+    rm -rf /src/minimap2-${VERSION}_x64-linux
 WORKDIR /src
 ENV PATH="/src:$PATH"
 
